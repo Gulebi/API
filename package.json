@@ -1,0 +1,20 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./index.js",
+    "dev": "nodemon ./index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "canvas": "^2.9.0",
+    "canvas-constructor": "^5.0.2",
+    "express": "^4.17.2",
+    "joi": "^17.6.0",
+    "nodemon": "^2.0.15"
+  }
+}
