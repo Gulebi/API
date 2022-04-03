@@ -28,4 +28,8 @@ DELETE http://localhost:3000/api/blocks/5
 
 ###
 
-GET http://localhost:3000/api/block/1
+GET http://localhost:3000/api/gay/?image=https://cdn.discordapp.com/attachments/756487030661316659/944621640631857202/ArtyomSkala640x640blackwhite.png 
+
+###
+
+GET http://localhost:3000/api/hitler/?image=https://cdn.discordapp.com/attachments/792049117236035625/951809867092467732/f9a3a2e3ff0246a9b76f59e94cabe648.png

@@ -1,17 +1,35 @@
 const Joi = require('joi')
+const path = require('path')
+const fs = require('fs');
 const express = require('express');
 const app = express();
 
-app.use(express.json());
+const gay = require('./modules/gay')
+const hitler = require('./modules/hitler')
+
+const cmdsDir = './modules'
+
+let cmdsAmount = 0
+
+const readCommands = (dir) => {
+    const files = fs.readdirSync(path.join(__dirname, dir))
+    for (const file of files) {
+        const stat = fs.lstatSync(path.join(__dirname, dir, file))
+        if (stat.isDirectory()) {
+            readCommands(path.join(dir, file))
+        } else if (!file.endsWith('.png')) {
+            const filePath = file
+            let moduleName = file.replace('.js', '')
+            moduleName = require(path.join(__dirname, dir, filePath))
 
 
+            cmdsAmount++
+        }
+    }
+}
 
-const blocks = [
-    { id: 1, name: 'block1' },
-    { id: 2, name: 'block2' },
-    { id: 3, name: 'block3' },
-];
-
+readCommands(cmdsDir)
+console.log(`Загружено ${cmdsAmount} модулей`)
 
 
 app.get('/', (req, res) => {
@@ -20,85 +38,30 @@ app.get('/', (req, res) => {
 
 
 
-app.get('/api/blocks', (req, res) => {
-    res.send(blocks);
+app.get('/api/gay/:image?', async (req, res) => {
+    const imageRaw = req.query.image
+    
+    const imageEndPath = await gay.createImage(imageRaw)
+
+    console.log(imageEndPath);
+
+    setTimeout(function() {
+        res.set("Content-Type", "image/png");
+        res.sendFile(imageEndPath);
+    }, 200)
 });
 
+app.get('/api/hitler/:image?', async (req, res) => {
+    const imageRaw = req.query.image
+    
+    const imageEndPath = await hitler.createImage(imageRaw)
 
+    console.log(imageEndPath);
 
-app.post('/api/blocks', (req, res) => {
-    const { error } = validateBlock(req.body);
-
-    if (error) {
-        res.status(400);
-        res.send(error.details[0].message);
-        return;
-    };
-
-    const block = {
-        id: blocks.length + 1,
-        name: req.body.name
-    };
-    blocks.push(block);
-    res.send(block);
-});
-
-
-
-app.put('/api/blocks/:id', (req, res) => {
-    const block = blocks.find(b => b.id === parseInt(req.params.id));
-    if (!block) {
-        res.status(404);
-        res.send('Block was not found.');
-        return;
-    }; // 404
-
-    const { error } = validateBlock(req.body);
-
-    if (error) {
-        res.status(400);
-        res.send(error.details[0].message);
-        return;
-    };
-
-    block.name = req.body.name;
-    res.send(block);
-});
-
-function validateBlock(block){
-    const schema = Joi.object({
-        name: Joi.string().min(3).required()
-    });
-
-    return schema.validate(block);
-};
-
-
-
-app.delete('/api/blocks/:id', (req, res) => {
-    const block = blocks.find(b => b.id === parseInt(req.params.id));
-    if (!block) {
-        res.status(404);
-        res.send('Block was not found.');
-        return;
-    }; // 404
-
-    const index = blocks.indexOf(block);
-    blocks.splice(index, 1);
-
-    res.send(block);
-});
-
-
-
-app.get('/api/block/:id', (req, res) => {
-    const block = blocks.find(b => b.id === parseInt(req.params.id));
-    if (!block) {
-        res.status(404);
-        res.send('Block was not found.');
-        return;
-    }; // 404
-    res.send(block);
+    setTimeout(function() {
+        res.set("Content-Type", "image/png");
+        res.sendFile(imageEndPath);
+    }, 100)
 });
 
 app.listen(3000, () => console.log('Listening on port 3000...'));
