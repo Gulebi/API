@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - 1666-02-15
 
+## [0.1.2] - 2022-05-01
+
+### Fixed
+- Few other issues
+
+## [0.1.1] - 2022-05-01
+
+### Fixed
+- Some issues
+
 ## [0.1.0] - 2022-05-01
 
 ### Added
@@ -34,12 +44,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Base
-
-### Changed
-
-### Removed
-
-### Fixed
 
 [Unreleased]:
 
