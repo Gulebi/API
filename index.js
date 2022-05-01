@@ -1,35 +1,17 @@
-const Joi = require('joi')
 const path = require('path')
-const fs = require('fs');
+const fs = require('fs')
 const express = require('express');
 const app = express();
 
-const gay = require('./modules/gay')
-const hitler = require('./modules/hitler')
-
-const cmdsDir = './modules'
-
-let cmdsAmount = 0
-
-const readCommands = (dir) => {
-    const files = fs.readdirSync(path.join(__dirname, dir))
-    for (const file of files) {
-        const stat = fs.lstatSync(path.join(__dirname, dir, file))
-        if (stat.isDirectory()) {
-            readCommands(path.join(dir, file))
-        } else if (!file.endsWith('.png')) {
-            const filePath = file
-            let moduleName = file.replace('.js', '')
-            moduleName = require(path.join(__dirname, dir, filePath))
+const PORT = process.env.PORT || 3000
 
 
-            cmdsAmount++
-        }
-    }
-}
 
-readCommands(cmdsDir)
-console.log(`Загружено ${cmdsAmount} модулей`)
+const requireDir = require('require-dir');
+const modules = requireDir('./modules');
+
+console.log(`Loaded ${Object.keys(modules).length} modules...`);
+
 
 
 app.get('/', (req, res) => {
@@ -38,30 +20,110 @@ app.get('/', (req, res) => {
 
 
 
+app.get('/api/', (req, res) => {
+    res.send(`List of endpoints: ${Object.getOwnPropertyNames(modules).join(', ')}`);
+});
+
+
+
 app.get('/api/gay/:image?', async (req, res) => {
     const imageRaw = req.query.image
     
-    const imageEndPath = await gay.createImage(imageRaw)
+    const image = await modules.gay.createImage(imageRaw)
 
-    console.log(imageEndPath);
-
-    setTimeout(function() {
-        res.set("Content-Type", "image/png");
-        res.sendFile(imageEndPath);
-    }, 200)
+    res.set("Content-Type", "image/png");
+    res.send(Buffer.from(image))
 });
 
 app.get('/api/hitler/:image?', async (req, res) => {
     const imageRaw = req.query.image
     
-    const imageEndPath = await hitler.createImage(imageRaw)
+    const image = await modules.hitler.createImage(imageRaw)
 
-    console.log(imageEndPath);
-
-    setTimeout(function() {
-        res.set("Content-Type", "image/png");
-        res.sendFile(imageEndPath);
-    }, 100)
+    res.set("Content-Type", "image/png");
+    res.send(Buffer.from(image))
 });
 
-app.listen(3000, () => console.log('Listening on port 3000...'));
+app.get('/api/affect/:image?', async (req, res) => {
+    const imageRaw = req.query.image
+    
+    const image = await modules.affect.createImage(imageRaw)
+
+    res.set("Content-Type", "image/png");
+    res.send(Buffer.from(image))
+});
+
+app.get('/api/putin/:image?', async (req, res) => {
+    const imageRaw = req.query.image
+    
+    const image = await modules.putin.createImage(imageRaw)
+
+    res.set("Content-Type", "image/png");
+    res.send(Buffer.from(image))
+});
+
+app.get('/api/obama/:image?', async (req, res) => {
+    const imageRaw = req.query.image
+    
+    const image = await modules.obama.createImage(imageRaw)
+
+    res.set("Content-Type", "image/png");
+    res.send(Buffer.from(image))
+});
+
+app.get('/api/stonks/:image?', async (req, res) => {
+    const imageRaw = req.query.image
+    
+    const image = await modules.stonks.createImage(imageRaw)
+
+    res.set("Content-Type", "image/png");
+    res.send(Buffer.from(image))
+});
+
+
+
+app.get('/api/pixelate/:image?:int?', async (req, res) => {
+    const imageRaw = req.query.image
+    const int = req.query.int
+
+    const image = await modules.pixelate.createImage(imageRaw, int)
+
+    res.set("Content-Type", "image/png");
+    res.send(Buffer.from(image))
+});
+
+
+
+app.get('/api/blur/:image?:int?', async (req, res) => {
+    const imageRaw = req.query.image
+    const int = req.query.int
+
+    const image = await modules.blur.createImage(imageRaw, int)
+
+    res.set("Content-Type", "image/png");
+    res.send(Buffer.from(image))
+});
+
+
+
+app.get('/api/signa/:text?', async (req, res) => {
+    const text = req.query.text
+    
+    const image = await modules.signa.createImage(text)
+
+    res.set("Content-Type", "image/png");
+    res.send(Buffer.from(image))
+});
+
+app.get('/api/abdurahman/:text?', async (req, res) => {
+    const text = req.query.text
+    
+    const image = await modules.abdurahman.createImage(text)
+
+    res.set("Content-Type", "image/png");
+    res.send(Buffer.from(image))
+});
+
+
+
+app.listen(PORT, () => console.log(`Listening on port ${PORT}...`));

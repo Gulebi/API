@@ -1,0 +1,27 @@
+GET http://localhost:3000/
+
+###
+
+GET http://localhost:3000/api/blocks
+
+###
+
+POST http://localhost:3000/api/blocks
+content-type: application/json
+
+{
+    "name": "suus"
+}
+
+###
+
+PUT http://localhost:3000/api/blocks/4
+content-type: application/json
+
+{
+    "name": "suus"
+}
+
+###
+
+DELETE http://localhost:3000/api/blocks/5

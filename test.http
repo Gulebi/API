@@ -1,35 +1,39 @@
-GET http://localhost:3000/
-
-###
-
-GET http://localhost:3000/api/blocks
-
-###
-
-POST http://localhost:3000/api/blocks
-content-type: application/json
-
-{
-    "name": "suus"
-}
-
-###
-
-PUT http://localhost:3000/api/blocks/4
-content-type: application/json
-
-{
-    "name": "suus"
-}
-
-###
-
-DELETE http://localhost:3000/api/blocks/5
-
-###
+### Gay
 
 GET http://localhost:3000/api/gay/?image=https://cdn.discordapp.com/attachments/756487030661316659/944621640631857202/ArtyomSkala640x640blackwhite.png 
 
-###
+### Affect
+
+GET http://localhost:3000/api/affect/?image=https://cdn.discordapp.com/attachments/756487030661316659/944621640631857202/ArtyomSkala640x640blackwhite.png 
+
+### Hitler
 
 GET http://localhost:3000/api/hitler/?image=https://cdn.discordapp.com/attachments/792049117236035625/951809867092467732/f9a3a2e3ff0246a9b76f59e94cabe648.png
+
+### Putin
+
+GET http://localhost:3000/api/putin/?image=https://cdn.discordapp.com/attachments/756487030661316659/944621640631857202/ArtyomSkala640x640blackwhite.png
+
+### Obama
+
+GET http://localhost:3000/api/obama/?image=https://cdn.discordapp.com/attachments/756487030661316659/969276565546483782/Screenshot_192.png
+
+### Stonks
+
+GET http://localhost:3000/api/stonks/?image=https://cdn.discordapp.com/attachments/567703491037102092/970225228829564928/1447815751187277937.jpg
+
+### Signa
+
+GET http://localhost:3000/api/signa/?text=bebra
+
+### Abdurahman
+
+GET http://localhost:3000/api/abdurahman/?text=Kto?
+
+### Pixelate
+
+GET http://localhost:3000/api/pixelate/?image=https://cdn.discordapp.com/attachments/567703491037102092/970225228829564928/1447815751187277937.jpg&int=10
+
+### Blur
+
+GET http://localhost:3000/api/blur/?image=https://cdn.discordapp.com/attachments/567703491037102092/970225228829564928/1447815751187277937.jpg&int=7
