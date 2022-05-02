@@ -1,127 +1,56 @@
-const path = require('path')
-const fs = require('fs')
+const requireDir = require('require-dir');
 const express = require('express');
 const app = express();
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000;
 
-
-
-const requireDir = require('require-dir');
 const modules = requireDir('./modules');
+console.log(`Loaded ${Object.keys(modules).length} modules.`);
 
-console.log(`Loaded ${Object.keys(modules).length} modules...`);
 
+const messages = {
+    'listOfEndpoints': { 'List of endpoints': Object.getOwnPropertyNames(modules).join(', ') },
+    'endpointError': { error: 'Specify the correct endpoint' },
+    'imageError': { error: 'Specify the correct image url'},
+    'textError': { error: 'Specify the text' },
+    'intError': { error: 'Specify the correct integer'}
+};
 
 
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.send('Babu-API is the best image processing API and more');
 });
 
 
 
-app.get('/api/', (req, res) => {
-    res.send(`List of endpoints: ${Object.getOwnPropertyNames(modules).join(', ')}`);
+app.get('/api/list/', (req, res) => {
+    res.set("Content-Type", "application/json");
+    res.send(messages['listOfEndpoints']);
 });
 
 
 
-app.get('/api/gay/:image?', async (req, res) => {
-    const imageRaw = req.query.image
-    
-    const image = await modules.gay.createImage(imageRaw)
+app.get('/api/:endpoint', async (req, res) => {
+    const endpoint = req.params.endpoint;
+    const imageRaw = req.query.image;
+    const text = req.query.text;
+    const int = req.query.int;
 
-    res.set("Content-Type", "image/png");
-    res.send(Buffer.from(image))
-});
+    if (endpoint in modules == false) {
+        res.set("Content-Type", "application/json");
+        res.send(messages['endpointError']);
+        return;
+    };
 
-app.get('/api/hitler/:image?', async (req, res) => {
-    const imageRaw = req.query.image
-    
-    const image = await modules.hitler.createImage(imageRaw)
+    const output = await modules[endpoint].createImage(imageRaw, text , int);
 
-    res.set("Content-Type", "image/png");
-    res.send(Buffer.from(image))
-});
-
-app.get('/api/affect/:image?', async (req, res) => {
-    const imageRaw = req.query.image
-    
-    const image = await modules.affect.createImage(imageRaw)
-
-    res.set("Content-Type", "image/png");
-    res.send(Buffer.from(image))
-});
-
-app.get('/api/putin/:image?', async (req, res) => {
-    const imageRaw = req.query.image
-    
-    const image = await modules.putin.createImage(imageRaw)
-
-    res.set("Content-Type", "image/png");
-    res.send(Buffer.from(image))
-});
-
-app.get('/api/obama/:image?', async (req, res) => {
-    const imageRaw = req.query.image
-    
-    const image = await modules.obama.createImage(imageRaw)
-
-    res.set("Content-Type", "image/png");
-    res.send(Buffer.from(image))
-});
-
-app.get('/api/stonks/:image?', async (req, res) => {
-    const imageRaw = req.query.image
-    
-    const image = await modules.stonks.createImage(imageRaw)
-
-    res.set("Content-Type", "image/png");
-    res.send(Buffer.from(image))
-});
-
-
-
-app.get('/api/pixelate/:image?:int?', async (req, res) => {
-    const imageRaw = req.query.image
-    const int = req.query.int
-
-    const image = await modules.pixelate.createImage(imageRaw, int)
-
-    res.set("Content-Type", "image/png");
-    res.send(Buffer.from(image))
-});
-
-
-
-app.get('/api/blur/:image?:int?', async (req, res) => {
-    const imageRaw = req.query.image
-    const int = req.query.int
-
-    const image = await modules.blur.createImage(imageRaw, int)
-
-    res.set("Content-Type", "image/png");
-    res.send(Buffer.from(image))
-});
-
-
-
-app.get('/api/signa/:text?', async (req, res) => {
-    const text = req.query.text
-    
-    const image = await modules.signa.createImage(text)
-
-    res.set("Content-Type", "image/png");
-    res.send(Buffer.from(image))
-});
-
-app.get('/api/abdurahman/:text?', async (req, res) => {
-    const text = req.query.text
-    
-    const image = await modules.abdurahman.createImage(text)
-
-    res.set("Content-Type", "image/png");
-    res.send(Buffer.from(image))
+    if (Buffer.isBuffer(output)) {
+        res.set("Content-Type", "image/png"); 
+        res.send(Buffer.from(output));
+    } else {
+        res.set("Content-Type", "application/json");
+        res.send(messages[output]);
+    }
 });
 
 

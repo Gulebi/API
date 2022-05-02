@@ -1,6 +1,10 @@
 const Jimp = require(`jimp`)
 
-module.exports.createImage = async (text) => {
+module.exports.createImage = async (imageRaw, text , int) => {
+    if (text === undefined) {
+        return 'textError';
+    };
+
     let bg = await Jimp.read('./assets/signa.png');
 
     const font = await Jimp.loadFont('./assets/fonts/Impact-64-black/2QcjDDTRJaWwtqDbh9iKBKLh.ttf.fnt');

@@ -1,7 +1,13 @@
 const Canvas = require('canvas')
 
 module.exports.createImage = async (url) => {
-    const img = await Canvas.loadImage(url);
+    let img = '';
+    try {
+        img = await Canvas.loadImage(url);
+    } catch (error) {
+        return 'imageError';
+    }
+
     const background = await Canvas.loadImage('./assets/obama.png');
 
     const canvasMain = Canvas.createCanvas(700, 493); // Canvas для всей картинки
