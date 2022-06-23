@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - 1666-02-15
 
+## [0.2.1] - 2022-05-28
+
+### Added
+- "divorce" endpoint
+
+### Fixed
+- "hitler" endpoint
+
 ## [0.2.0] - 2022-05-02
 
 ### Changed

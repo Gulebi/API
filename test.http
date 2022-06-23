@@ -1,6 +1,6 @@
 ### All
 
-GET http://localhost:3000/api/?endpoint=gfay&image=https://cdn.discordapp.com/attachments/756487030661316659/944621640631857202/ArtyomSkala640x640blackwhite.png&text=Bebra&int=10
+GET http://localhost:3000/api/divorce/?image=https://cdn.discordapp.com/attachments/756487030661316659/944621640631857202/ArtyomSkala640x640blackwhite.png&text=Bebra&int=10
 
 ### Gay
 
@@ -16,7 +16,7 @@ GET http://localhost:3000/api/hitler/?image=https://cdn.discordapp.com/attachmen
 
 ### Putin
 
-GET http://localhost:3000/api/?endpoint=putin&image=https://cdn.discordapp.com/attachments/756487030661316659/944621640631857202/ArtyomSkala640x640blackwhite.png
+GET http://localhost:3000/api/putin/?image=https://cdn.discordapp.com/attachments/756487030661316659/944621640631857202/ArtyomSkala640x640blackwhite.png
 
 ### Obama
 
@@ -32,12 +32,16 @@ GET http://localhost:3000/api/signa/?text=bebra
 
 ### Abdurahman
 
-GET http://localhost:3000/api/abdurahman
+GET http://localhost:3000/api/abdurahman/?text=bebra
 
 ### Pixelate
 
-GET http://localhost:3000/api/?endpoint=pixelate&image=https://cdn.discordapp.com/attachments/567703491037102092/970225228829564928/1447815751187277937.jpg&int=10
+GET http://localhost:3000/api/pixelate/?image=https://cdn.discordapp.com/attachments/567703491037102092/970225228829564928/1447815751187277937.jpg&int=20
 
 ### Blur
 
-GET http://localhost:3000/api/?endpoint=blur&image=https://cdn.discordapp.com/attachments/567703491037102092/970225228829564928/1447815751187277937.jpg&int=7
+GET http://localhost:3000/api/blur/?image=https://cdn.discordapp.com/attachments/567703491037102092/970225228829564928/1447815751187277937.jpg&int=10
+
+### Divorce
+
+GET http://localhost:3000/api/divorce/?image=https://cdn.discordapp.com/attachments/567703491037102092/970225228829564928/1447815751187277937.jpg
