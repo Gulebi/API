@@ -1,6 +1,6 @@
 const Jimp = require(`jimp`);
 
-module.exports.createImage = async (imageRaw, text, int) => {
+module.exports.createImage = async ({ text }) => {
     if (text === undefined) {
         return "textError";
     }

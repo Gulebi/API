@@ -1,6 +1,6 @@
 const Jimp = require(`jimp`);
 
-module.exports.createImage = async (url) => {
+module.exports.createImage = async ({ url }) => {
     try {
         const img = await Jimp.read(url);
 

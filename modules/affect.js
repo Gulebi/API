@@ -1,6 +1,6 @@
 const Canvas = require("canvas");
 
-module.exports.createImage = async (url) => {
+module.exports.createImage = async ({ url }) => {
     try {
         const img = await Canvas.loadImage(url);
 

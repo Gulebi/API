@@ -1,7 +1,8 @@
 const Jimp = require("jimp");
 
-module.exports.createImage = async (url, text, int = 5) => {
+module.exports.createImage = async ({ url, text, int = 5 }) => {
     try {
+        console.log(url);
         const img = await Jimp.read(url);
 
         img.pixelate(parseInt(int));

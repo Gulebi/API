@@ -28,13 +28,13 @@ app.get("/api/:endpoint", async (req, res) => {
     res.set("Content-Type", "application/json");
 
     const { endpoint } = req.params;
-    const { imageRaw, text, int } = req.query;
+    const { image: url, text, int } = req.query;
 
     if (endpoint in modules == false) {
         return res.send(messages["endpointError"]);
     }
 
-    const output = await modules[endpoint].createImage(imageRaw, text, int);
+    const output = await modules[endpoint].createImage({ url, text, int });
 
     if (Buffer.isBuffer(output)) {
         res.set("Content-Type", "image/png");
