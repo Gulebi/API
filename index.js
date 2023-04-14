@@ -1,58 +1,47 @@
-const requireDir = require('require-dir');
-const express = require('express');
+const requireDir = require("require-dir");
+const express = require("express");
 const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-const modules = requireDir('./modules');
+const modules = requireDir("./modules");
 console.log(`Loaded ${Object.keys(modules).length} modules.`);
 
-
 const messages = {
-    'listOfEndpoints': { 'List of endpoints': Object.getOwnPropertyNames(modules).join(', ') },
-    'endpointError': { error: 'Specify the correct endpoint' },
-    'imageError': { error: 'Specify the correct image url'},
-    'textError': { error: 'Specify the text' },
-    'intError': { error: 'Specify the correct integer'}
+    listOfEndpoints: { "List of endpoints": Object.getOwnPropertyNames(modules).join(", ") },
+    endpointError: { error: "Specify the correct endpoint" },
+    imageError: { error: "Specify the correct image url" },
+    textError: { error: "Specify the text" },
+    intError: { error: "Specify the correct integer" },
 };
 
-
-app.get('/', (req, res) => {
-    res.send('Babu-API is the best image processing API and more');
+app.get("/", (req, res) => {
+    res.send("Babu-API is the best meme API");
 });
 
-
-
-app.get('/api/list/', (req, res) => {
+app.get("/api/list/", (req, res) => {
     res.set("Content-Type", "application/json");
-    res.send(messages['listOfEndpoints']);
+    res.send(messages["listOfEndpoints"]);
 });
 
+app.get("/api/:endpoint", async (req, res) => {
+    res.set("Content-Type", "application/json");
 
-
-app.get('/api/:endpoint', async (req, res) => {
-    const endpoint = req.params.endpoint;
-    const imageRaw = req.query.image;
-    const text = req.query.text;
-    const int = req.query.int;
+    const { endpoint } = req.params;
+    const { imageRaw, text, int } = req.query;
 
     if (endpoint in modules == false) {
-        res.set("Content-Type", "application/json");
-        res.send(messages['endpointError']);
-        return;
-    };
+        return res.send(messages["endpointError"]);
+    }
 
-    const output = await modules[endpoint].createImage(imageRaw, text , int);
+    const output = await modules[endpoint].createImage(imageRaw, text, int);
 
     if (Buffer.isBuffer(output)) {
-        res.set("Content-Type", "image/png"); 
+        res.set("Content-Type", "image/png");
         res.send(Buffer.from(output));
     } else {
-        res.set("Content-Type", "application/json");
         res.send(messages[output]);
     }
 });
-
-
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}...`));

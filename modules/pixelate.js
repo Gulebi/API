@@ -1,14 +1,14 @@
-const Jimp = require('jimp')
+const Jimp = require("jimp");
 
 module.exports.createImage = async (url, text, int = 5) => {
-    let img = '';
     try {
-        img = await Jimp.read(url);
-    } catch (error) {
-        return 'imageError';
-    }
-    
-    img.pixelate(parseInt(int));
+        const img = await Jimp.read(url);
 
-    return await img.getBufferAsync(Jimp.MIME_PNG);
-}
+        img.pixelate(parseInt(int));
+
+        return await img.getBufferAsync(Jimp.MIME_PNG);
+    } catch (error) {
+        console.log(error);
+        return "imageError";
+    }
+};
