@@ -16,7 +16,8 @@ const messages = {
 };
 
 app.get("/", (req, res) => {
-    res.send("Babu-API is the best meme API");
+    res.set("Content-Type", "application/json");
+    res.send({ label: "Babu-API is the best meme API" });
 });
 
 app.get("/api/list/", (req, res) => {
